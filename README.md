@@ -1,4 +1,4 @@
-# :ticket: My Little Ticket
+# My Little Ticket :ticket: 
 
 [![Build Status](https://travis-ci.org/iksaif/my-little-ticket.svg?branch=master)](https://travis-ci.org/iksaif/my-little-ticket)
 [![Coverage Status](https://coveralls.io/repos/github/iksaif/my-little-ticket/badge.svg)](https://coveralls.io/github/iksaif/my-little-ticket?branch=master)
