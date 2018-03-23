@@ -1,0 +1,1 @@
+"""Default scoring strategy."""
