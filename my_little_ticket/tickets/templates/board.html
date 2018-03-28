@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load humanize %}
+
+{% block title %}{{ board.name }}{% endblock %}
+
+{% block bootstrap4_content %}
+{{ block.super }}
+    <div class="pull-right m-4">
+        <div class="card">
+            <h3 class="card-header">{{ board.name }}</h3>
+            <div class="card-body">
+                {{ board.description|urlize }}<br/>
+                {{ board.link|urlize }}
+            </div>
+            <div class="card-footer">
+                Sources:
+                <ul>
+                    {% for source in board.sources.all %}
+                        <li><a href="{{ source.link }}">{{ source }}</a> ({{ source.modified_on|naturaltime }})</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+
+    <table class="table table-hover table-sm">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Assignee</th>
+            <th>Summary</th>
+            <th>Age</th>
+            <th>Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ticket in tickets %}
+            <tr class="table-warning">
+                <td><a href="{{ ticket.link }}">{{ ticket.id }}</a></td>
+                <td>{{ ticket.assignee|urlize }}</td>
+                <td>{{ ticket.summary }}</td>
+                <td>{{ ticket.created_on|naturaltime }}</td>
+                <td>{{ ticket.score }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

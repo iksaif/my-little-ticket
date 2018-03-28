@@ -6,4 +6,4 @@ include README.md
 include requirements.txt tests-requirements.txt
 
 recursive-include my-little-ticket/tickets/templates *
-recursive-include my-little-ticket/status/static *
+recursive-include my-little-ticket/tickets/static *

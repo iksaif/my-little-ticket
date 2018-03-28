@@ -6,7 +6,14 @@ from django.urls import include, path
 from rest_framework import routers
 from rest_framework_swagger.views import get_swagger_view
 
+from my_little_ticket.tickets import views
+
 router = routers.DefaultRouter()
+router.register(r'ticket', views.TicketsViewSet)
+router.register(r'board', views.BoardsViewSet)
+router.register(r'source', views.SourcesViewSet)
+# TODO:
+# Add API to refresh a source or a board
 
 schema_view = get_swagger_view(title='My Little Ticket')
 

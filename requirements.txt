@@ -9,5 +9,6 @@ django-prometheus
 django-allauth
 django-gravatar2
 django-health-check
+django-jsonfield
 
 jira
