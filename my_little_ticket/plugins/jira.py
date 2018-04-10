@@ -36,10 +36,10 @@ class JiraPlugin(base.Plugin):
         self._client = None
         self.max_results = params.get('max_results', 1000)
 
+        self.url = params.get('url', DEFAULT_JIRA_URL)
+        self.username = params.get('username', DEFAULT_JIRA_USERNAME)
+        self.password = params.get('password', DEFAULT_JIRA_PASSWORD)
         if params:
-            self.url = params.get('url', DEFAULT_JIRA_URL)
-            self.username = params.get('username', DEFAULT_JIRA_USERNAME)
-            self.password = params.get('password', DEFAULT_JIRA_PASSWORD)
             self.jql = params['jql']
 
     @property
@@ -98,15 +98,25 @@ class JiraPlugin(base.Plugin):
         data['permalink'] = issue.permalink()
         del data['self']
 
-        if 'description' in data['fields']:
-            text = data['fields']['description']
+        tags = list(issue.fields.labels)
+        tags.extend(issue.fields.components)
+        if issue.fields.assignee:
+            assignee = issue.fields.assignee.name
         else:
-            text = None
-        status = base.Ticket(
+            assignee = None
+
+        ticket = base.Ticket(
             ext_id=issue.key,
             summary=issue.fields.summary,
-            text=text,
+            text=issue.fields.description,
             link=issue.permalink(),
-            # FIXME: all fields.
+            project=issue.fields.project,
+            type=issue.fields.issuetype,
+            assignee=assignee,
+            status=issue.fields.status,
+            tags=tags,
+            created_on=issue.fields.created,
+            modified_on=issue.fields.updated,
+            raw=issue.raw,
         )
-        return status
+        return ticket

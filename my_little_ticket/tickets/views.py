@@ -1,4 +1,5 @@
 """Views."""
+import collections
 from django import shortcuts
 from annoying import decorators as an_decorators
 from my_little_ticket.tickets import models
@@ -44,5 +45,21 @@ def index(request):
 def board(request, board_id):
     """Show a board."""
     board = shortcuts.get_object_or_404(models.Board, pk=board_id)
-    tickets = models.Ticket.objects.filter(board=board)
-    return {'board': board, 'tickets': tickets}
+    tickets = set()
+    for source in board.sources.all():
+        tickets |= set(models.Ticket.objects.filter(source=source))
+
+    # TODO: Move elsewhere.
+    strategy = board.strategy()
+    groups = collections.defaultdict(list)
+    for ticket in tickets:
+        ticket.strategy_score = strategy.score(ticket)
+        ticket.strategy_status = strategy.status(ticket)
+        ticket.strategy_group = strategy.group(ticket)
+        groups[ticket.strategy_group].append(ticket)
+
+    for group, tickets in list(groups.items()):
+        tickets = sorted(tickets, key=lambda t: t.strategy_score, reverse=True)
+        groups[group] = tickets
+
+    return {'board': board, 'groups': dict(groups)}

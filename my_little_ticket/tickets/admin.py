@@ -21,7 +21,7 @@ class BoardAdmin(admin.ModelAdmin):
 class TicketAdmin(admin.ModelAdmin):
     """Admin for Ticket."""
 
-    list_display = ('external_id', 'source', 'board', 'score', 'created_on', 'modified_on')
+    list_display = ('external_id', 'summary', 'source', 'created_on', 'modified_on')
 
 
 @admin.register(models.Tag)

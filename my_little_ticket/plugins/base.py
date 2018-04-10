@@ -23,18 +23,25 @@ class Ticket(dict):
         s = self
 
         s['id'] = uuid.uuid5(uuid.NAMESPACE_URL, str(link))
-        s['ext_id'] = ext_id
+        s['external_id'] = ext_id
         s['summary'] = summary
-        s['text'] = text
-        s['project'] = project
-        s['type'] = type
-        s['assignee'] = assignee
-        s['status'] = status
+        if text:
+            s['text'] = text
+        if project:
+            s['project'] = project
+        if type:
+            s['type'] = type
+        if assignee:
+            s['assignee'] = assignee
+        if status:
+            s['status'] = status
         s['link'] = link
         s['tags'] = set(tags or [])
-        s['raw'] = raw
-        s['created_on'] = created_on
-        s['modified_on'] = modified_on
+        s['raw'] = dict(raw) if raw else {}
+        if created_on:
+            s['created_on'] = created_on
+        if modified_on:
+            s['modified_on'] = modified_on
         s['refreshed_on'] = refreshed_on or datetime.now()
 
     def __hash__(self):
@@ -94,6 +101,12 @@ class Strategy(object):
 
     __metaclass__ = abc.ABCMeta
 
+    STATUS_INFO = "info"
+    STATUS_WARNING = "warning"
+    STATUS_DANGER = "danger"
+    STATUS_SUCCESS = "success"
+    STATUS_IDLE = "idle"
+
     def __init__(self, param=None):
         """Create the plugin instance.
 
@@ -131,6 +144,14 @@ class Strategy(object):
     def score(self, ticket):
         """Return a score for a given ticket."""
         return 0
+
+    def group(self, ticket):
+        """Return the group for this ticket."""
+        return ticket.project
+
+    def status(self, ticket):
+        """Return a status for a given ticket."""
+        return self.STATUS_INFO
 
     def scores(self, tickets):
         """Return a map of ticket -> score.
