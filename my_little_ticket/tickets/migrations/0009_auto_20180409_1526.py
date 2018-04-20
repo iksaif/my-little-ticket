@@ -6,24 +6,22 @@ import jsonfield.fields
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('tickets', '0008_auto_20180409_1441'),
-    ]
+    dependencies = [("tickets", "0008_auto_20180409_1441")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='board',
-            name='scoring_strategy',
-        ),
+        migrations.RemoveField(model_name="board", name="scoring_strategy"),
         migrations.AddField(
-            model_name='board',
-            name='strategy_params',
+            model_name="board",
+            name="strategy_params",
             field=jsonfield.fields.JSONField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='board',
-            name='strategy_py_module',
-            field=models.CharField(default='my_little_ticket.plugins.default.DefaultStrategy', max_length=255),
+            model_name="board",
+            name="strategy_py_module",
+            field=models.CharField(
+                default="my_little_ticket.plugins.default.DefaultStrategy",
+                max_length=255,
+            ),
             preserve_default=False,
         ),
     ]

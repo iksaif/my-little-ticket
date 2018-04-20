@@ -18,37 +18,45 @@ class DefaultStrategy(base.Strategy):
         """Constructor."""
         super(DefaultStrategy, self).__init__(params)
         # Default to two days.
-        self.max_age = params.get('max_age', 60 * 60 * 24 * 2)
+        self.max_age = params.get("max_age", 60 * 60 * 24 * 2)
+        self.params = params
 
     def short_name(self):
+        """Return the short name (id) for this strategy."""
         return "default"
 
     def name(self):
+        """Return a human readable name for this strategy."""
         return "Default"
 
     def description(self):
-        return """Default strategy."""
+        """Explains how this strategy works."""
+        return """Default strategy: %s.""" % self.params
 
     def group(self, ticket):
-        """Simple grouping."""
-        if ticket.status.lower() in ['block', 'blocked', 'idle']:
-            return 'Inactive'
+        """Group tickets together."""
+        if ticket.status.lower() in ["block", "blocked", "idle"]:
+            return "Inactive"
+
         return ticket.project
 
     def status(self, ticket):
-        """Simple score status."""
+        """Score status for a given ticket."""
         delta = time.time() - time.mktime(ticket.modified_on.timetuple())
         if delta > self.max_age:
             return self.STATUS_DANGER
+
         elif delta > self.max_age * 0.75:
             return self.STATUS_WARNING
+
         elif delta > self.max_age * 0.25:
             return self.STATUS_INFO
+
         else:
             return self.STATUS_SUCCESS
 
     def score(self, ticket):
-        """Simple score strategy.
+        """Score a ticket.
 
         Use the time since last update to compute a score.
         """

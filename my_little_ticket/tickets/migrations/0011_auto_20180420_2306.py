@@ -6,39 +6,53 @@ import my_little_ticket.tickets.models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('tickets', '0010_auto_20180409_1531'),
-    ]
+    dependencies = [("tickets", "0010_auto_20180409_1531")]
 
     operations = [
         migrations.AlterField(
-            model_name='board',
-            name='strategy_params',
+            model_name="board",
+            name="strategy_params",
             field=my_little_ticket.tickets.models.JSONField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='board',
-            name='strategy_py_module',
-            field=models.CharField(choices=[('my_little_ticket.plugins.default.DefaultStrategy', 'my_little_ticket.plugins.default.DefaultStrategy')], max_length=255),
+            model_name="board",
+            name="strategy_py_module",
+            field=models.CharField(
+                choices=[
+                    (
+                        "my_little_ticket.plugins.default.DefaultStrategy",
+                        "my_little_ticket.plugins.default.DefaultStrategy",
+                    )
+                ],
+                max_length=255,
+            ),
         ),
         migrations.AlterField(
-            model_name='source',
-            name='params',
+            model_name="source",
+            name="params",
             field=my_little_ticket.tickets.models.JSONField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='source',
-            name='py_module',
-            field=models.CharField(choices=[('my_little_ticket.plugins.jira.JiraPlugin', 'my_little_ticket.plugins.jira.JiraPlugin')], max_length=255),
+            model_name="source",
+            name="py_module",
+            field=models.CharField(
+                choices=[
+                    (
+                        "my_little_ticket.plugins.jira.JiraPlugin",
+                        "my_little_ticket.plugins.jira.JiraPlugin",
+                    )
+                ],
+                max_length=255,
+            ),
         ),
         migrations.AlterField(
-            model_name='ticket',
-            name='raw',
+            model_name="ticket",
+            name="raw",
             field=my_little_ticket.tickets.models.JSONField(null=True),
         ),
         migrations.AlterField(
-            model_name='ticket',
-            name='tags',
-            field=models.ManyToManyField(blank=True, to='tickets.Tag'),
+            model_name="ticket",
+            name="tags",
+            field=models.ManyToManyField(blank=True, to="tickets.Tag"),
         ),
     ]

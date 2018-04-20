@@ -6,15 +6,29 @@ from datetime import datetime
 
 
 # TODO: make that a named tuple with an as_dict() method.
+
+
 class Ticket(dict):
     """Simple class to create tickets."""
 
-    NAMESPACE = uuid.UUID('{27d04f51-793d-40da-a2cf-dd03fb606947}')
+    NAMESPACE = uuid.UUID("{27d04f51-793d-40da-a2cf-dd03fb606947}")
 
-    def __init__(self, ext_id, summary, text, link,
-                 project=None, type=None, assignee=None,
-                 status=None, tags=None, raw=None,
-                 created_on=None, modified_on=None, refreshed_on=None):
+    def __init__(
+        self,
+        ext_id,
+        summary,
+        text,
+        link,
+        project=None,
+        type=None,
+        assignee=None,
+        status=None,
+        tags=None,
+        raw=None,
+        created_on=None,
+        modified_on=None,
+        refreshed_on=None,
+    ):
         """Initialize a ticket.
 
         See my_little_tickets.tickets.models.Ticket for details about
@@ -22,30 +36,30 @@ class Ticket(dict):
         """
         s = self
 
-        s['id'] = uuid.uuid5(uuid.NAMESPACE_URL, str(link))
-        s['external_id'] = ext_id
-        s['summary'] = summary
+        s["id"] = uuid.uuid5(uuid.NAMESPACE_URL, str(link))
+        s["external_id"] = ext_id
+        s["summary"] = summary
         if text:
-            s['text'] = text
+            s["text"] = text
         if project:
-            s['project'] = project
+            s["project"] = project
         if type:
-            s['type'] = type
+            s["type"] = type
         if assignee:
-            s['assignee'] = assignee
+            s["assignee"] = assignee
         if status:
-            s['status'] = status
-        s['link'] = link
-        s['tags'] = set(tags or [])
-        s['raw'] = dict(raw) if raw else {}
+            s["status"] = status
+        s["link"] = link
+        s["tags"] = set(tags or [])
+        s["raw"] = dict(raw) if raw else {}
         if created_on:
-            s['created_on'] = created_on
+            s["created_on"] = created_on
         if modified_on:
-            s['modified_on'] = modified_on
-        s['refreshed_on'] = refreshed_on or datetime.now()
+            s["modified_on"] = modified_on
+        s["refreshed_on"] = refreshed_on or datetime.now()
 
     def __hash__(self):
-        return hash(self['id'])
+        return hash(self["id"])
 
 
 class Plugin(object):

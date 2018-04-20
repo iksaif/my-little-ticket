@@ -8,22 +8,36 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Board',
+            name="Board",
             fields=[
-                ('id', models.CharField(max_length=64, primary_key=True, serialize=False, validators=[
-                 django.core.validators.RegexValidator(
-                     '^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')])),
-                ('name', models.CharField(max_length=64)),
-                ('description', models.TextField(
-                    blank=True, max_length=2048, null=True)),
-                ('link', models.URLField(max_length=1024)),
-                ('scoring_strategy', models.TextField(
-                    blank=True, max_length=1028, null=True)),
+                (
+                    "id",
+                    models.CharField(
+                        max_length=64,
+                        primary_key=True,
+                        serialize=False,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                "^[0-9a-zA-Z]*$",
+                                "Only alphanumeric characters are allowed.",
+                            )
+                        ],
+                    ),
+                ),
+                ("name", models.CharField(max_length=64)),
+                (
+                    "description",
+                    models.TextField(blank=True, max_length=2048, null=True),
+                ),
+                ("link", models.URLField(max_length=1024)),
+                (
+                    "scoring_strategy",
+                    models.TextField(blank=True, max_length=1028, null=True),
+                ),
             ],
-        ),
+        )
     ]

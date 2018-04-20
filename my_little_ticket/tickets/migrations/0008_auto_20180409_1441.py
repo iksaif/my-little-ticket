@@ -5,29 +5,27 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('tickets', '0007_auto_20180409_1437'),
-    ]
+    dependencies = [("tickets", "0007_auto_20180409_1437")]
 
     operations = [
         migrations.AlterField(
-            model_name='ticket',
-            name='assignee',
+            model_name="ticket",
+            name="assignee",
             field=models.CharField(blank=True, max_length=256, null=True),
         ),
         migrations.AlterField(
-            model_name='ticket',
-            name='project',
+            model_name="ticket",
+            name="project",
             field=models.CharField(blank=True, max_length=64, null=True),
         ),
         migrations.AlterField(
-            model_name='ticket',
-            name='status',
+            model_name="ticket",
+            name="status",
             field=models.CharField(blank=True, max_length=64, null=True),
         ),
         migrations.AlterField(
-            model_name='ticket',
-            name='type',
+            model_name="ticket",
+            name="type",
             field=models.CharField(blank=True, max_length=64, null=True),
         ),
     ]

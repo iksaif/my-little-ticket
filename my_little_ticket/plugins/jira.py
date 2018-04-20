@@ -7,9 +7,9 @@ from my_little_ticket.plugins import base
 from django.conf import settings
 
 
-DEFAULT_JIRA_URL = getattr(settings, 'JIRA_URL', None)
-DEFAULT_JIRA_USERNAME = getattr(settings, 'JIRA_USERNAME', None)
-DEFAULT_JIRA_PASSWORD = getattr(settings, 'JIRA_PASSWORD', None)
+DEFAULT_JIRA_URL = getattr(settings, "JIRA_URL", None)
+DEFAULT_JIRA_USERNAME = getattr(settings, "JIRA_USERNAME", None)
+DEFAULT_JIRA_PASSWORD = getattr(settings, "JIRA_PASSWORD", None)
 
 
 class JiraPlugin(base.Plugin):
@@ -35,36 +35,36 @@ class JiraPlugin(base.Plugin):
             params = {}
 
         self._client = None
-        self.max_results = params.get('max_results', 1000)
+        self.max_results = params.get("max_results", 1000)
 
-        self.url = params.get('url', DEFAULT_JIRA_URL)
-        self.username = params.get('username', DEFAULT_JIRA_USERNAME)
-        self.password = params.get('password', DEFAULT_JIRA_PASSWORD)
+        self.url = params.get("url", DEFAULT_JIRA_URL)
+        self.username = params.get("username", DEFAULT_JIRA_USERNAME)
+        self.password = params.get("password", DEFAULT_JIRA_PASSWORD)
         if params:
-            self.jql = params['jql']
+            self.jql = params["jql"]
         else:
-            self.jql = ''
-        self.timeout = params.get('timeout', 30)
+            self.jql = ""
+        self.timeout = params.get("timeout", 30)
 
     @property
     def short_name(self):
         """Return the short name."""
-        return 'jira'
+        return "jira"
 
     @property
     def name(self):
         """Return the name."""
-        return 'Jira'
+        return "Jira"
 
     @property
     def description(self):
         """Return the description."""
-        return 'Returns tickets from JIRA.'
+        return "Returns tickets from JIRA."
 
     @property
     def link(self):
         """Return the link."""
-        return 'https://github.com/iksaif/my-little-ticket'
+        return "https://github.com/iksaif/my-little-ticket"
 
     @property
     def client(self):
@@ -74,7 +74,9 @@ class JiraPlugin(base.Plugin):
                 return None
 
             basic_auth = (self.username, self.password)
-            self._client = jira.JIRA(self.url, basic_auth=basic_auth, timeout=self.timeout)
+            self._client = jira.JIRA(
+                self.url, basic_auth=basic_auth, timeout=self.timeout
+            )
 
         return self._client
 
@@ -89,18 +91,18 @@ class JiraPlugin(base.Plugin):
         for issue in issues:
             ticket = self._to_ticket(issue)
             if ticket is not None:
-                ret[ticket['id']] = ticket
+                ret[ticket["id"]] = ticket
         return ret
 
     def _to_ticket(self, issue):
         """Return a status or None."""
-        logging.debug('Handling %s' % (issue.fields.summary))
+        logging.debug("Handling %s" % (issue.fields.summary))
 
         data = dict(issue.raw)
-        data['me'] = data['self']
-        data['issue'] = issue
-        data['permalink'] = issue.permalink()
-        del data['self']
+        data["me"] = data["self"]
+        data["issue"] = issue
+        data["permalink"] = issue.permalink()
+        del data["self"]
 
         tags = list(issue.fields.labels)
         tags.extend(issue.fields.components)

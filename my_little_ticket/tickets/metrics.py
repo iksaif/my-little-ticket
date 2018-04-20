@@ -25,7 +25,7 @@ class TicketsCollector(object):
 
         metrics = []
 
-        labels = ['id', 'name']
+        labels = ["id", "name"]
         success_on = prometheus_client.core.GaugeMetricFamily(
             "source_success_on", "Last success for this source", labels=labels
         )
@@ -40,9 +40,13 @@ class TicketsCollector(object):
         )
         for source in models.Source.objects.all():
             labels = [str(source.id), source.name]
-            timestamp = time.mktime(source.success_on.timetuple()) if source.success_on else 0
+            timestamp = time.mktime(
+                source.success_on.timetuple()
+            ) if source.success_on else 0
             success_on.add_metric(labels, timestamp)
-            timestamp = time.mktime(source.failure_on.timetuple()) if source.failure_on else 0
+            timestamp = time.mktime(
+                source.failure_on.timetuple()
+            ) if source.failure_on else 0
             failure_on.add_metric(labels, timestamp)
             success.add_metric(labels, source.success)
             failure.add_metric(labels, source.failure)
@@ -51,5 +55,5 @@ class TicketsCollector(object):
         return metrics
 
 
-if getattr(settings, 'tickets_METRICS', False):
-    tickets_COLLECTOR = ticketsCollector()
+if getattr(settings, "TICKETS_METRICS", True):
+    tickets_collector = TicketsCollector()

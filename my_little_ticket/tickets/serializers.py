@@ -10,8 +10,10 @@ class BoardSerializer(serializers.HyperlinkedModelSerializer):
         """Configuration."""
 
         model = models.Board
-        fields = '__all__'
-        # TODO: Display tickets here.
+        fields = "__all__"
+
+
+# TODO: Display tickets here.
 
 
 class TicketSerializer(serializers.HyperlinkedModelSerializer):
@@ -26,7 +28,7 @@ class TicketSerializer(serializers.HyperlinkedModelSerializer):
         # - Fix raw (JSONField)
         # - Display tags
         # fields = '__all__'
-        exclude = ('raw', 'tags',)
+        exclude = ("raw", "tags")
 
 
 class SourceSerializer(serializers.HyperlinkedModelSerializer):
@@ -39,4 +41,4 @@ class SourceSerializer(serializers.HyperlinkedModelSerializer):
         # TODO:
         # - Fix raw (JSONField)
         # fields = '__all__'
-        exclude = ('params_json', )
+        exclude = ("params_json",)

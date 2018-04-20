@@ -12,23 +12,28 @@ import jsonfield
 
 
 class JSONField(jsonfield.JSONField):
-    """Wrapper for jsonfield.JSONField that works with Django 2.0
+    """Wrapper for jsonfield.JSONField that works with Django 2.0.
 
     Get rid of it once https://github.com/dmkoch/django-jsonfield/issues/215 is released.
     """
+
     def value_to_string(self, obj):
+        """Value to string."""
         value = self.value_from_object(obj, dump=False)
         return self.get_db_prep_value(value, None)
 
     def value_from_object(self, obj, dump=True):
+        """Value from obect."""
         value = super(jsonfield.fields.JSONFieldBase, self).value_from_object(obj)
         if self.null and value is None:
             return None
+
         return self.dumps_for_display(value) if dump else value
 
 
 _ID_VALIDATOR = validators.RegexValidator(
-    r'^[a-zA-Z]+[0-9a-zA-Z-]*$', 'Only alphanumeric characters are allowed.')
+    r"^[a-zA-Z]+[0-9a-zA-Z-]*$", "Only alphanumeric characters are allowed."
+)
 
 
 class Source(models.Model):
@@ -36,10 +41,10 @@ class Source(models.Model):
 
     This will usually be a filter for a ticket system.
     """
+
     PLUGINS_CHOICES = ((s, s) for s in settings.MLT_PLUGINS)
 
-    id = models.CharField(
-        primary_key=True, max_length=64, validators=[_ID_VALIDATOR])
+    id = models.CharField(primary_key=True, max_length=64, validators=[_ID_VALIDATOR])
     name = models.CharField(max_length=64)
     description = models.TextField(max_length=1024, blank=True, null=True)
     link = models.URLField(max_length=1024, blank=True)
@@ -60,10 +65,10 @@ class Source(models.Model):
 
 class Board(models.Model):
     """A Ticket board."""
+
     STRATEGY_CHOICES = ((s, s) for s in settings.MLT_STRATEGIES)
 
-    id = models.CharField(
-        primary_key=True, max_length=64, validators=[_ID_VALIDATOR])
+    id = models.CharField(primary_key=True, max_length=64, validators=[_ID_VALIDATOR])
     name = models.CharField(max_length=64)
     description = models.TextField(max_length=2048, blank=True, null=True)
     link = models.URLField(max_length=1024)
@@ -77,12 +82,15 @@ class Board(models.Model):
         return self.name
 
     def strategy(self):
-        py_module = self.strategy_py_module or 'my_little_ticket.plugins.default.DefaultStrategy'
+        """Return the strategy for this board."""
+        py_module = self.strategy_py_module or "my_little_ticket.plugins.default.DefaultStrategy"
         strategy_class = module_loading.import_string(py_module)
         return strategy_class(self.strategy_params or {})
 
 
 class Tag(models.Model):
+    """A tag."""
+
     word = models.CharField(max_length=64)
 
     def __str__(self):
@@ -93,13 +101,16 @@ class Ticket(models.Model):
     """A (cached) ticket."""
 
     class Meta:
-        unique_together = (('external_id', 'source'),)
+        """Meta."""
+
+        unique_together = (("external_id", "source"),)
 
     # A stable id for each individual event.
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     external_id = models.CharField(max_length=64)
-    source = models.ForeignKey(to=Source, on_delete=models.CASCADE,
-                               related_name="source")
+    source = models.ForeignKey(
+        to=Source, on_delete=models.CASCADE, related_name="source"
+    )
 
     created_on = models.DateTimeField(default=timezone.now)
     modified_on = models.DateTimeField(default=timezone.now)

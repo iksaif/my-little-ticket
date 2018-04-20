@@ -34,14 +34,14 @@ class TicketsViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = serializers.TicketSerializer
 
 
-@an_decorators.render_to('index.html')
+@an_decorators.render_to("index.html")
 def index(request):
     """Show the list of boards."""
     boards = models.Board.objects.all()
-    return {'boards': boards}
+    return {"boards": boards}
 
 
-@an_decorators.render_to('board.html')
+@an_decorators.render_to("board.html")
 def board(request, board_id):
     """Show a board."""
     board = shortcuts.get_object_or_404(models.Board, pk=board_id)
@@ -62,4 +62,4 @@ def board(request, board_id):
         tickets = sorted(tickets, key=lambda t: t.strategy_score, reverse=True)
         groups[group] = tickets
 
-    return {'board': board, 'groups': dict(groups)}
+    return {"board": board, "groups": dict(groups)}

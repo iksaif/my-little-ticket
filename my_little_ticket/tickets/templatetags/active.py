@@ -12,10 +12,11 @@ register = template.Library()
 def active(context, pattern_or_urlname):
     """Return 'active' if the current request matches the pattern."""
     try:
-        pattern = '^' + reverse(pattern_or_urlname)
+        pattern = "^" + reverse(pattern_or_urlname)
     except NoReverseMatch:
         pattern = pattern_or_urlname
-    path = context['request'].path
+    path = context["request"].path
     if re.search(pattern, path):
-        return 'active'
-    return ''
+        return "active"
+
+    return ""
