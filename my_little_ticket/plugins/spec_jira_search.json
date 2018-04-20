@@ -1,1 +1,24 @@
-{"issues": [{"self": "http://foo/FOO-1", "key": "FOO-1", "fields": {"summary": "Test"}}]}
+{
+  "issues": [
+    {
+      "self": "http://foo/FOO-1",
+      "key": "FOO-1",
+      "fields": {
+        "project": "FOO",
+        "issuetype": "Ticket",
+        "status": "Open",
+        "created": "",
+        "updated": "",
+        "summary": "Test",
+        "labels": [
+          "tag"
+        ],
+        "components": [
+          "Bugs"
+        ],
+        "assignee": {"name": "j.smith"},
+        "description": "A long ticket"
+      }
+    }
+  ]
+}
