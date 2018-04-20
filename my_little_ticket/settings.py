@@ -167,6 +167,15 @@ BOOTSTRAP4 = {
 # JIRA_USERNAME = foo
 # JIRA_PASSWORD = password
 
+# Known plugins, edit to add yours.
+MLT_PLUGINS = [
+    'my_little_ticket.plugins.jira.JiraPlugin',
+]
+
+MLT_STRATEGIES = [
+    'my_little_ticket.plugins.default.DefaultStrategy',
+]
+
 try:
     from my_little_ticket.local_settings import *  # noqa
 except ImportError:

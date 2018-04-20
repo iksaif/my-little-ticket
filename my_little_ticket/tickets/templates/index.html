@@ -5,6 +5,7 @@
 {% block title %}Boards{% endblock %}
 
 {% block content %}
+    <div class="row">
     {% for board in boards %}
         <div class="col-md-4">
             <div class="card">
@@ -24,4 +25,5 @@
             </div>
         </div>
     {% endfor %}
+    </div>
 {% endblock %}

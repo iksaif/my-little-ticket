@@ -5,6 +5,7 @@ import uuid
 from django.utils import timezone
 from django.db import models
 from django.core import validators
+from django.conf import settings
 from django.utils import module_loading
 
 import jsonfield
@@ -19,13 +20,14 @@ class Source(models.Model):
 
     This will usually be a filter for a ticket system.
     """
+    PLUGINS_CHOICES = ((s, s) for s in settings.MLT_PLUGINS)
 
     id = models.CharField(
         primary_key=True, max_length=64, validators=[_ID_VALIDATOR])
     name = models.CharField(max_length=64)
     description = models.TextField(max_length=1024, blank=True, null=True)
     link = models.URLField(max_length=1024, blank=True)
-    py_module = models.CharField(max_length=255)
+    py_module = models.CharField(max_length=255, choices=PLUGINS_CHOICES)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
@@ -42,13 +44,14 @@ class Source(models.Model):
 
 class Board(models.Model):
     """A Ticket board."""
+    STRATEGY_CHOICES = ((s, s) for s in settings.MLT_STRATEGIES)
 
     id = models.CharField(
         primary_key=True, max_length=64, validators=[_ID_VALIDATOR])
     name = models.CharField(max_length=64)
     description = models.TextField(max_length=2048, blank=True, null=True)
     link = models.URLField(max_length=1024)
-    strategy_py_module = models.CharField(max_length=255)
+    strategy_py_module = models.CharField(max_length=255, choices=STRATEGY_CHOICES)
     strategy_params = jsonfield.JSONField(blank=True, null=True)
     sources = models.ManyToManyField(Source, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)

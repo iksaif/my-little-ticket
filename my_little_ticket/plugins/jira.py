@@ -13,7 +13,7 @@ DEFAULT_JIRA_PASSWORD = getattr(settings, 'JIRA_PASSWORD', None)
 
 
 class JiraPlugin(base.Plugin):
-    """my-little-ticket Static plugin.
+    """my-little-ticket JIRA plugin.
 
     params:
     ```python
@@ -23,6 +23,7 @@ class JiraPlugin(base.Plugin):
       'password': 'bar',
       'jql': {},            // Get tickets matching this jql.
       'max_results': 5,     // Optional maximum number of tickets.
+      'timeout': 30,        // Request timeout.
     }
     ```
     """
@@ -41,6 +42,9 @@ class JiraPlugin(base.Plugin):
         self.password = params.get('password', DEFAULT_JIRA_PASSWORD)
         if params:
             self.jql = params['jql']
+        else:
+            self.jql = ''
+        self.timeout = params.get('timeout', 30)
 
     @property
     def short_name(self):
@@ -70,7 +74,7 @@ class JiraPlugin(base.Plugin):
                 return None
 
             basic_auth = (self.username, self.password)
-            self._client = jira.JIRA(self.url, basic_auth=basic_auth, timeout=5)
+            self._client = jira.JIRA(self.url, basic_auth=basic_auth, timeout=self.timeout)
 
         return self._client
 
