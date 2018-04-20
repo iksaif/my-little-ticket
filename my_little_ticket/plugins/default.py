@@ -35,7 +35,8 @@ class DefaultStrategy(base.Strategy):
 
     def group(self, ticket):
         """Group tickets together."""
-        if ticket.status.lower() in ["block", "blocked", "idle"]:
+        status = ticket.status or ""
+        if status.lower() in ["block", "blocked", "idle"]:
             return "Inactive"
 
         return ticket.project
