@@ -11,6 +11,22 @@ from django.utils import module_loading
 import jsonfield
 
 
+class JSONField(jsonfield.JSONField):
+    """Wrapper for jsonfield.JSONField that works with Django 2.0
+
+    Get rid of it once https://github.com/dmkoch/django-jsonfield/issues/215 is released.
+    """
+    def value_to_string(self, obj):
+        value = self.value_from_object(obj, dump=False)
+        return self.get_db_prep_value(value, None)
+
+    def value_from_object(self, obj, dump=True):
+        value = super(jsonfield.fields.JSONFieldBase, self).value_from_object(obj)
+        if self.null and value is None:
+            return None
+        return self.dumps_for_display(value) if dump else value
+
+
 _ID_VALIDATOR = validators.RegexValidator(
     r'^[a-zA-Z]+[0-9a-zA-Z-]*$', 'Only alphanumeric characters are allowed.')
 
@@ -31,7 +47,7 @@ class Source(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
-    params = jsonfield.JSONField(blank=True, null=True)
+    params = JSONField(blank=True, null=True)
 
     success = models.PositiveIntegerField(default=0)
     failure = models.PositiveIntegerField(default=0)
@@ -52,7 +68,7 @@ class Board(models.Model):
     description = models.TextField(max_length=2048, blank=True, null=True)
     link = models.URLField(max_length=1024)
     strategy_py_module = models.CharField(max_length=255, choices=STRATEGY_CHOICES)
-    strategy_params = jsonfield.JSONField(blank=True, null=True)
+    strategy_params = JSONField(blank=True, null=True)
     sources = models.ManyToManyField(Source, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
@@ -99,7 +115,7 @@ class Ticket(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
 
     # Raw data.
-    raw = jsonfield.JSONField(null=True)
+    raw = JSONField(null=True)
 
     def __str__(self):
         return "%s - %s" % (self.source, self.external_id)
