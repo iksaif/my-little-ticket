@@ -6,7 +6,7 @@
 
 
 {% block content %}
-    {% for group, tickets in groups.items %}
+    {% for group, tickets in groups %}
         <h3>{{ group }}</h3>
     <table class="table table-hover table-sm">
         <thead>
@@ -46,7 +46,9 @@
         <h3 class="card-header">{{ board.name }}</h3>
         <div class="card-body">
             {{ board.description|urlize }}<br/>
-            {{ board.link|urlize }}
+            {{ board.link|urlize }}<br/>
+            Strategy <strong>{{ board.strategy.name }}</strong>:
+            {{ board.strategy.description|safe }}
         </div>
         <div class="card-footer">
             Sources:

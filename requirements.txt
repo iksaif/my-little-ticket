@@ -12,3 +12,4 @@ django-health-check
 jsonfield
 
 jira
+humanize

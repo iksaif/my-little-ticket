@@ -58,8 +58,10 @@ def board(request, board_id):
         ticket.strategy_group = strategy.group(ticket)
         groups[ticket.strategy_group].append(ticket)
 
+    # Sort everything.
     for group, tickets in list(groups.items()):
         tickets = sorted(tickets, key=lambda t: t.strategy_score, reverse=True)
         groups[group] = tickets
 
-    return {"board": board, "groups": dict(groups)}
+    groups = sorted(list(groups.items()), key=lambda k: k[0])
+    return {"board": board, "groups": groups}
