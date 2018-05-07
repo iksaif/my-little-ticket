@@ -4,7 +4,7 @@ from django import shortcuts
 from annoying import decorators as an_decorators
 from my_little_ticket.tickets import models
 from my_little_ticket.tickets import serializers
-
+from my_little_ticket.plugins import base
 
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -41,6 +41,21 @@ def index(request):
     return {"boards": boards}
 
 
+def worst_status(a, b):
+    """Return the worst status."""
+    status_to_score = {
+        base.Strategy.STATUS_SUCCESS: 1,
+        base.Strategy.STATUS_IDLE: 2,
+        base.Strategy.STATUS_INFO: 2,
+        base.Strategy.STATUS_WARNING: 3,
+        base.Strategy.STATUS_DANGER: 4,
+    }
+    if status_to_score.get(a) > status_to_score.get(b):
+        return a
+    else:
+        return b
+
+
 @an_decorators.render_to("board.html")
 def board(request, board_id):
     """Show a board."""
@@ -59,9 +74,18 @@ def board(request, board_id):
         groups[ticket.strategy_group].append(ticket)
 
     # Sort everything.
+    count = 0
+    worst_strategy_status = base.Strategy.STATUS_SUCCESS
     for group, tickets in list(groups.items()):
         tickets = sorted(tickets, key=lambda t: t.strategy_score, reverse=True)
+        for ticket in tickets:
+            worst_strategy_status = worst_status(ticket.strategy_status, worst_strategy_status)
+            count += 1
         groups[group] = tickets
 
     groups = sorted(list(groups.items()), key=lambda k: k[0])
-    return {"board": board, "groups": groups}
+    return {
+        "board": board, "groups": groups,
+        "tickets_status": worst_strategy_status,
+        "tickets_count": count
+    }

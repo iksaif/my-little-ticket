@@ -2,7 +2,13 @@
 {% load bootstrap4 %}
 {% load humanize %}
 
+{% block page_title %}{{ tickets_count }} Tickets - {{ board.name }}{% endblock %}
 {% block title %}{{ board.name }}{% endblock %}
+{% block favicon %}/static/favicon-{{ tickets_status }}.ico{% endblock %}
+{% block bootstrap4_extra_head %}
+    {{ block.super }}
+    <meta http-equiv="refresh" content="600">
+{% endblock %}
 
 
 {% block content %}

@@ -8,8 +8,10 @@
 {% load account %}
 
 {% block bootstrap4_extra_head %}
-{{ block.super}}
-{% fontawesome_stylesheet %}
+    {{ block.super}}
+    <title>{% block page_title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% block favicon %}/static/favicon.ico{% endblock %}">
+    {% fontawesome_stylesheet %}
 {% endblock %}
 
 {% block bootstrap4_before_content %}
