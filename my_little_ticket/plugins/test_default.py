@@ -2,6 +2,7 @@
 
 import unittest
 
+import uuid
 from my_little_ticket.tickets.models import Ticket
 from my_little_ticket.plugins import default
 
@@ -12,8 +13,8 @@ class MyTestCase(unittest.TestCase):
     def test_basic(self):
         """Check if the default strategy works."""
         tickets = (
-            Ticket(id="foo", summary="Foo", text="Foo foo", link="http://bug/foo"),
-            Ticket(id="bar", summary="bar", text="bar bar", link="http://bug/bar"),
+            Ticket(id=uuid.uuid4(), summary="Foo", text="Foo foo", link="http://bug/foo"),
+            Ticket(id=uuid.uuid4(), summary="bar", text="bar bar", link="http://bug/bar"),
         )
         strategy = default.DefaultStrategy(params={})
         result = strategy.scores(tickets)

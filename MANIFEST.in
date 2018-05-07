@@ -5,5 +5,5 @@ include MANIFEST.in
 include README.md
 include requirements.txt tests-requirements.txt
 
-recursive-include my-little-ticket/tickets/templates *
-recursive-include my-little-ticket/tickets/static *
+recursive-include my_little_ticket/tickets/templates *
+recursive-include my_little_ticket/tickets/static *
