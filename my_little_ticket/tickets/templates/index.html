@@ -19,7 +19,7 @@
                     Sources:
                     <ul>
                         {% for source in board.sources.all %}
-                            <li><a href="{{ source.link }}">{{ source }}</a> ({{ source.modified_on|naturaltime }})</li>
+                            <li>{% if source.link %}<a href="{{ source.link }}">{{ source }}</a>{% else %}{{ source }}{% endif %} ({{ source.modified_on|naturaltime }})</li>
                         {% endfor %}
                     </ul>
                 </div>
