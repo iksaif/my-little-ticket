@@ -91,7 +91,7 @@ class JiraPlugin(base.Plugin):
         for issue in issues:
             ticket = self._to_ticket(issue)
             if ticket is not None:
-                ret[ticket["id"]] = ticket
+                ret[ticket["uuid"]] = ticket
         return ret
 
     def _to_ticket(self, issue):

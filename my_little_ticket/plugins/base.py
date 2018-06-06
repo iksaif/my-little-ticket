@@ -36,7 +36,7 @@ class Ticket(dict):
         """
         s = self
 
-        s["id"] = uuid.uuid5(uuid.NAMESPACE_URL, str(link))
+        s["uuid"] = uuid.uuid5(uuid.NAMESPACE_URL, str(link))
         s["external_id"] = ext_id
         s["summary"] = summary
         if text:
@@ -59,7 +59,7 @@ class Ticket(dict):
         s["refreshed_on"] = refreshed_on or datetime.now()
 
     def __hash__(self):
-        return hash(self["id"])
+        return hash(self["uuid"])
 
 
 class Plugin(object):

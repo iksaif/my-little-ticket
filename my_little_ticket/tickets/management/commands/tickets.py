@@ -53,15 +53,19 @@ class Command(base.BaseCommand):
         existing_tickets = set(
             models.Ticket.objects.filter(source=source).values_list("id", flat=True)
         )
+        updated_tickets = set()
+        new_tickets = set()
 
         for ticket_id, ticket in tickets:
-            self._save_ticket(source, ticket_id, ticket)
-
-        updated_tickets = set([ticket_id for ticket_id, _ in tickets])
+            ticket_obj, created = self._save_ticket(source, ticket_id, ticket)
+            if not ticket_obj:
+                continue
+            if created:
+                new_tickets.add(ticket_obj.id)
+            else:
+                updated_tickets.add(ticket_obj.id)
 
         outdated_tickets = existing_tickets - updated_tickets
-        new_tickets = updated_tickets - existing_tickets
-        updated_tickets -= new_tickets
         print("New: %s" % new_tickets)
         print("Updated: %s" % updated_tickets)
         print("Old: %s" % outdated_tickets)
@@ -72,16 +76,20 @@ class Command(base.BaseCommand):
 
     def _save_ticket(self, source, ticket_id, ticket):
         """Save a ticket."""
+        ticket_obj = None
+        created = False
         try:
             tags = ticket.pop("tags", [])
             ticket_obj, created = models.Ticket.objects.update_or_create(
-                id=ticket_id, source=source, defaults=ticket
+                uuid=ticket_id, source=source, defaults=ticket
             )
             for tag in tags:
                 tag_obj, created = models.Tag.objects.update_or_create(word=tag)
                 ticket_obj.tags.add(tag_obj)
+            ticket_obj.save()
         except Exception:
-            msg = "Failed to save ticket with id #%s" % ticket_id
+            msg = "Failed to save ticket with id #%s (%s)" % (
+                ticket_id, ticket_obj.id if ticket_obj else None)
             logging.exception(msg)
             self.stderr.write(self.style.ERROR(msg))
         else:
@@ -91,3 +99,4 @@ class Command(base.BaseCommand):
                     "%s %s:%s config" % (action, source.name, ticket_obj.external_id)
                 )
             )
+        return ticket_obj, created

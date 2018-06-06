@@ -113,10 +113,10 @@ class Ticket(models.Model):
     class Meta:
         """Meta."""
 
-        unique_together = (("external_id", "source"),)
+        unique_together = (("uuid", "source"),)
 
     # A stable id for each individual event.
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     external_id = models.CharField(max_length=64)
     source = models.ForeignKey(
         to=Source, on_delete=models.CASCADE, related_name="source"

@@ -13,8 +13,8 @@ class MyTestCase(unittest.TestCase):
     def test_basic(self):
         """Check if the default strategy works."""
         tickets = (
-            Ticket(id=uuid.uuid4(), summary="Foo", text="Foo foo", link="http://bug/foo"),
-            Ticket(id=uuid.uuid4(), summary="bar", text="bar bar", link="http://bug/bar"),
+            Ticket(id=1, uuid=uuid.uuid4(), summary="Foo", text="Foo foo", link="http://bug/foo"),
+            Ticket(id=2, uuid=uuid.uuid4(), summary="bar", text="bar bar", link="http://bug/bar"),
         )
         strategy = default.DefaultStrategy(params={})
         result = strategy.scores(tickets)
