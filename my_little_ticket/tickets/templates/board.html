@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% load humanize %}
-
+{% load fontawesome %}
 {% block page_title %}{{ tickets_count }} Tickets - {{ board.name }}{% endblock %}
 {% block title %}{{ board.name }}{% endblock %}
 {% block favicon %}/static/favicon-{{ tickets_status }}.ico{% endblock %}
@@ -20,13 +20,12 @@
             <th>#</th>
             <th>Assignee</th>
             <th>Summary</th>
-            <th>Age</th>
             <th>Score</th>
         </tr>
         </thead>
         <tbody>
         {% for ticket in tickets %}
-            <tr>
+            <tr data-toggle="tooltip" data-placement="bottom" title="Created: {{ ticket.created_on|naturaltime }} Modified: {{ ticket.modified_on|naturaltime }} {% for k,v in ticket.info.items %}{{ k|title }}: {{ v }}{% endfor %}">
                 <td><a href="{{ ticket.link }}">{{ ticket.external_id }}</a></td>
                 <td>{% if ticket.assignee %}{{ ticket.assignee|urlize }}{%  endif %}</td>
                 <td>
@@ -36,11 +35,17 @@
                     {% endfor %}
                 </td>
                 <td>
-                    {{ ticket.created_on|naturaltime }}
-                </td>
-                <td>
+
                     <span class="badge badge-pill badge-{{ ticket.strategy_status }}">
-                        {{ ticket.strategy_score|floatformat:"0" }} {# FIXME #}
+                        {% if ticket.strategy_status == "danger" %}
+                            {% fontawesome_icon "frown" %}
+                        {% elif ticket.strategy_status == "warning"%}
+                            {% fontawesome_icon "meh" %}
+                        {% else %}
+                            {% fontawesome_icon "smile" %}
+                        {% endif %}
+                        {# Hidden because people ask questions #}
+                        <span class="text-{{ ticket.strategy_status }}">{{ ticket.strategy_score|floatformat:"0" }}</span>
                     </span>
                 </td>
             </tr>
@@ -60,9 +65,17 @@
             Sources:
             <ul>
                 {% for source in board.sources.all %}
-                    <li><a href="{{ source.link }}">{{ source }}</a> ({{ source.modified_on|naturaltime }})</li>
+                    <li><a href="{{ source.safe_link }}">{{ source }}</a> ({{ source.modified_on|naturaltime }})</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
+{% endblock %}
+{% block bootstrap4_after_content %}
+    {{ block.super}}
+    <script type="text/javascript">
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+    </script>
 {% endblock %}

@@ -147,12 +147,14 @@ REST_FRAMEWORK = {
 
 # Bootstrap
 BOOTSTRAP4 = {
-    "theme_url": "//maxcdn.bootstrapcdn.com/bootswatch/4.0.0/lumen/bootstrap.min.css",
+    "theme_url": "//maxcdn.bootstrapcdn.com/bootswatch/4.1.1/lumen/bootstrap.min.css",
     "error_css_class": "bootstrap4-error",
     "required_css_class": "bootstrap4-required",
     "javascript_in_head": False,
     "include_jquery": False,
 }
+
+FONTAWESOME_CSS_URL = 'https://use.fontawesome.com/releases/v5.0.13/css/all.css'
 
 # JIRA Configuration
 # JIRA_URL = 'https://jira/'

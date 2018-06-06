@@ -62,6 +62,16 @@ class Source(models.Model):
     def __str__(self):
         return self.name
 
+    def plugin(self):
+        """Return an instance of the associated plugin."""
+        plugin_class = module_loading.import_string(self.py_module)
+        return plugin_class(self.params or {})
+
+    @property
+    def safe_link(self):
+        """Return either a user-defined link or an auto one."""
+        return self.link or self.plugin().link
+
 
 class Board(models.Model):
     """A Ticket board."""
@@ -130,3 +140,7 @@ class Ticket(models.Model):
 
     def __str__(self):
         return "%s - %s" % (self.source, self.external_id)
+
+    def info(self):
+        """Give nice infos about the tickets."""
+        return self.source.plugin().info(self)

@@ -64,7 +64,7 @@ class JiraPlugin(base.Plugin):
     @property
     def link(self):
         """Return the link."""
-        return "https://github.com/iksaif/my-little-ticket"
+        return "%s/issues/?jql=%s" % (self.url, self.jql)
 
     @property
     def client(self):
@@ -126,3 +126,11 @@ class JiraPlugin(base.Plugin):
             raw=issue.raw,
         )
         return ticket
+
+    def info(self, ticket):
+        """Return info that might be interesting for this ticket."""
+        data = {}
+        if 'fields' in ticket.raw:
+            if 'reporter' in ticket.raw['fields']:
+                data['reporter'] = ticket.raw['fields']['reporter'].get('name')
+        return data

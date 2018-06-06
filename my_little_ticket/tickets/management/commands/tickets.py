@@ -4,7 +4,6 @@ import logging
 
 from django.core.management import base
 from django.utils import timezone
-from django.utils import module_loading
 
 from my_little_ticket.tickets import models
 
@@ -48,8 +47,7 @@ class Command(base.BaseCommand):
 
     def sync_source_safe(self, source):
         """Fetch ticket for one source, without exception handling."""
-        plugin_class = module_loading.import_string(source.py_module)
-        plugin = plugin_class(source.params)
+        plugin = source.plugin()
         tickets = set(plugin.tickets().items())
 
         existing_tickets = set(

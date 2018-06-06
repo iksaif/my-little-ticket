@@ -109,6 +109,10 @@ class Plugin(object):
         """
         return {}
 
+    def info(self, ticket):
+        """Return info that might be interesting for this ticket."""
+        return {}
+
 
 class Strategy(object):
     """Abstract class for strategies."""
