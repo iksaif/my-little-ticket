@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/iksaif/my-little-ticket.svg?branch=master)](https://travis-ci.org/iksaif/my-little-ticket)
 [![Coverage Status](https://coveralls.io/repos/github/iksaif/my-little-ticket/badge.svg)](https://coveralls.io/github/iksaif/my-little-ticket?branch=master)
-[![Dependency Status](https://gemnasium.com/badges/github.com/iksaif/my-little-ticket.svg)](https://gemnasium.com/github.com/iksaif/my-little-ticket)
 
 UI and API to show an aggregate status of your services.
 
