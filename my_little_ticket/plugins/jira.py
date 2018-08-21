@@ -112,7 +112,7 @@ class JiraPlugin(base.Plugin):
         else:
             assignee = None
 
-        if issue.fields.priority:
+        if hasattr(issue.fields, 'priority') and issue.fields.priority:
             priority = issue.fields.priority
         else:
             priority = None

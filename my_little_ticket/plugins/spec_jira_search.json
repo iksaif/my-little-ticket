@@ -10,6 +10,7 @@
         "created": "",
         "updated": "",
         "summary": "Test",
+        "priority": "Minor",
         "labels": [
           "tag"
         ],
