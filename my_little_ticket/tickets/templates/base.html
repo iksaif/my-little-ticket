@@ -8,66 +8,74 @@
 {% load account %}
 
 {% block bootstrap4_extra_head %}
-    {{ block.super}}
+    {{ block.super }}
     <title>{% block page_title %}{% endblock %}</title>
     <link rel="shortcut icon" href="{% block favicon %}/static/favicon.ico{% endblock %}">
     {% fontawesome_stylesheet %}
 {% endblock %}
 
 {% block bootstrap4_before_content %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">{% fontawesome_icon "ticket" %} My Little Ticket</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
-            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">{% fontawesome_icon "ticket-alt" %} My Little Ticket</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
+                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="nav navbar-nav mr-auto">
-            <li class="nav-item {% active '^/$' %}">
-                <a class="nav-link" href="/">{% fontawesome_icon "home" %} Home</a>
-            </li>
-        </ul>
-      <ul class="nav navbar-nav ml-auto">
-
-             <li class="nav-item"><a class="nav-link" href="/api/">{% fontawesome_icon 'sitemap' %} API</a></li>
-
-            <li class="nav-item"><a class="nav-link" href="/admin/">{% fontawesome_icon 'cogs' %} Admin</a></li>
-          {% if user.is_authenticated %}
-          {% get_social_accounts user as accounts %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">{% fontawesome_icon 'sign-out' %} Sign Out</a></li>
-          <li class="nav-item">
-              <a class="nav-link"  href="{% if user.socialaccount_set.all.0.get_profile_url %}{{ user.socialaccount_set.all.0.get_profile_url }}{% else %}#{% endif %}">
-              {% if user.socialaccount_set.all.0.get_avatar_url %}
-              <img class="img-circle img-responsive center-block" width="32" heigh="32" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="{{ user.get_full_name }}" />
-              {% elif user.email %}
-              {% gravatar user.email 32 user.get_full_name "rounded-circle img-fluid center-block" %}
-              {% else %}
-              {% user_display user %}
-              {% endif %}
-              </a>
-          </li>
-          {% else %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}">{% fontawesome_icon 'sign-in' %} Sign In</a></li>
-          {% endif %}
-        </ul>
-    </div>
-</nav>
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav mr-auto">
+                <li class="nav-item {% active '^/$' %}">
+                    <a class="nav-link" href="/">{% fontawesome_icon "home" %} Home</a>
+                </li>
+                {% block navbar_left %}{% endblock %}
+            </ul>
+            <ul class="nav navbar-nav ml-auto">
+                {% block navbar_right %}{% endblock %}
+                <li class="nav-item"><a class="nav-link" href="/api/">{% fontawesome_icon 'sitemap' %} API</a></li>
+                <li class="nav-item"><a class="nav-link" href="/admin/">{% fontawesome_icon 'cogs' %} Admin</a></li>
+                {% if user.is_authenticated %}
+                    {% get_social_accounts user as accounts %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                                            href="{% url 'account_logout' %}">{% fontawesome_icon 'sign-out' %} Sign Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% if user.socialaccount_set.all.0.get_profile_url %}{{ user.socialaccount_set.all.0.get_profile_url }}{% else %}#{% endif %}">
+                            {% if user.socialaccount_set.all.0.get_avatar_url %}
+                                <img class="img-circle img-responsive center-block" width="32" heigh="32"
+                                     src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
+                                     alt="{{ user.get_full_name }}"/>
+                            {% elif user.email %}
+                                {% gravatar user.email 32 user.get_full_name "rounded-circle img-fluid center-block" %}
+                            {% else %}
+                                {% user_display user %}
+                            {% endif %}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="{% url 'account_login' %}">{% fontawesome_icon 'sign-in' %} Sign In</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
 {% endblock %}
 
 {% block bootstrap4_content %}
-<div class="container">
-    <h1>{% block title %}(no title){% endblock %}</h1>
+    <div class="container">
+        <h1>{% block title %}(no title){% endblock %}</h1>
 
-    {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
 
-    {% block content %}
-    (no content)
-    {% endblock %}
-</div>
+        {% block content %}
+            (no content)
+        {% endblock %}
+    </div>
 {% endblock %}
 
 {% block bootstrap4_after_content %}
-{# Need that to prevent javascript errors, apparently include_jquery doesn't work #}
-{% bootstrap_jquery %}
+    {# Need that to prevent javascript errors, apparently include_jquery doesn't work #}
+    {% bootstrap_jquery %}
 {% endblock %}
