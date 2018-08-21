@@ -18,6 +18,7 @@
         <thead>
         <tr>
             <th>#</th>
+            <th>Priority</th>
             <th>Assignee</th>
             <th>Summary</th>
             <th>Status</th>
@@ -28,6 +29,7 @@
         {% for ticket in tickets %}
             <tr data-toggle="tooltip" data-placement="bottom" title="Created: {{ ticket.created_on|naturaltime }} Modified: {{ ticket.modified_on|naturaltime }} {% for k,v in ticket.info.items %}{{ k|title }}: {{ v }}{% endfor %}">
                 <td><a href="{{ ticket.link }}">{{ ticket.external_id }}</a></td>
+                <td>{% if ticket.priority %}<span class="badge badge-pill badge-primary">{{ ticket.priority }}</span>{% endif %}</td>
                 <td>{% if ticket.assignee %}{{ ticket.assignee|urlize }}{%  endif %}</td>
                 <td>
                     <a href="{{ ticket.link }}">{{ ticket.summary }}</a><br/>

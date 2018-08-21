@@ -46,13 +46,10 @@ class DefaultStrategy(base.Strategy):
         delta = time.time() - time.mktime(ticket.modified_on.timetuple())
         if delta > self.max_age:
             return self.STATUS_DANGER
-
         elif delta > self.max_age * 0.75:
             return self.STATUS_WARNING
-
         elif delta > self.max_age * 0.25:
             return self.STATUS_INFO
-
         else:
             return self.STATUS_SUCCESS
 

@@ -23,6 +23,7 @@ class Ticket(dict):
         type=None,
         assignee=None,
         status=None,
+        priority=None,
         tags=None,
         raw=None,
         created_on=None,
@@ -49,6 +50,8 @@ class Ticket(dict):
             s["assignee"] = assignee
         if status:
             s["status"] = status
+        if priority:
+            s["priority"] = priority
         s["link"] = link
         s["tags"] = set(tags or [])
         s["raw"] = dict(raw) if raw else {}

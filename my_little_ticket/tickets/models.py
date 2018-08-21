@@ -132,6 +132,7 @@ class Ticket(models.Model):
     type = models.CharField(max_length=64, blank=True, null=True)
     assignee = models.CharField(max_length=256, blank=True, null=True)
     status = models.CharField(max_length=64, blank=True, null=True)
+    priority = models.CharField(max_length=64, blank=True, null=True)
     link = models.URLField(max_length=1024, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
 

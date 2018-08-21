@@ -98,6 +98,7 @@ class JiraPlugin(base.Plugin):
         """Return a status or None."""
         logging.debug("Handling %s" % (issue.fields.summary))
 
+        # Make it easy to access fields.
         data = dict(issue.raw)
         data["me"] = data["self"]
         data["issue"] = issue
@@ -111,6 +112,11 @@ class JiraPlugin(base.Plugin):
         else:
             assignee = None
 
+        if issue.fields.priority:
+            priority = issue.fields.priority
+        else:
+            priority = None
+
         ticket = base.Ticket(
             ext_id=issue.key,
             summary=issue.fields.summary,
@@ -120,6 +126,7 @@ class JiraPlugin(base.Plugin):
             type=issue.fields.issuetype,
             assignee=assignee,
             status=issue.fields.status,
+            priority=priority,
             tags=tags,
             created_on=issue.fields.created,
             modified_on=issue.fields.updated,
