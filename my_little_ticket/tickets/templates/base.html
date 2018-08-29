@@ -11,6 +11,7 @@
     {{ block.super }}
     <title>{% block page_title %}{% endblock %}</title>
     <link rel="shortcut icon" href="{% block favicon %}/static/favicon.ico{% endblock %}">
+    <link href="{% block style %}/static/main.css{% endblock %}" rel="stylesheet">
     {% fontawesome_stylesheet %}
 {% endblock %}
 
