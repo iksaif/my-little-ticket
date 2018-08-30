@@ -13,7 +13,12 @@
 
 {% block content %}
     {% for group, tickets in groups %}
-        <h3>{{ group }}</h3>
+        <h3 id="group-{{ group | lower | escape }}">
+            <a class="anchor-link" href="#group-{{ group | lower | escape }}">
+                <i class="fas fa-paperclip fa-xs anchor-ico"></i>
+            </a>
+            {{ group }}
+        </h3>
     <table class="table table-hover table-sm">
         <thead>
         <tr>

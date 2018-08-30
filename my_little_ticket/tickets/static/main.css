@@ -1,0 +1,15 @@
+a.anchor-link {
+    float: left;
+    padding-right: 4px;
+    margin-left: -20px;
+    line-height: 1;
+}
+
+a.anchor-link .anchor-ico, a.anchor-link .anchor-ico i {
+    vertical-align: middle;
+    visibility: hidden;
+}
+
+a.anchor-link:hover .anchor-ico {
+    visibility: visible;
+}
