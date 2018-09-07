@@ -15,7 +15,7 @@ A dashboard for interrupt tickets that makes it simple to pick the most importan
 ```bash
 virtualenv venv -p python3
 source venv/bin/activate
-cp examples/local_settings.py defcon/
+cp examples/local_settings.py my_little_ticket/
 pip install -e .
 pip install -r requirements.txt
 ./manage.py migrate
@@ -35,7 +35,7 @@ This project is using [django-allauth](https://django-allauth.readthedocs.io/en/
 
 ## API
 
-Simply go to `/swagger/` or `/api/` to see what can be done.
+Simply go to `/swagger/` or `/api/` to see what can be done. No much so far.
 
 ## Plugins
 
