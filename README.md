@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/iksaif/my-little-ticket.svg?branch=master)](https://travis-ci.org/iksaif/my-little-ticket)
 [![Coverage Status](https://coveralls.io/repos/github/iksaif/my-little-ticket/badge.svg)](https://coveralls.io/github/iksaif/my-little-ticket?branch=master)
 
-UI and API to show an aggregate status of your services.
+A dashboard for interrupt tickets that makes it simple to pick the most important ticket to work on.
 
 [![My-Little-Ticket screenshot](doc/my-little-ticket.png)](doc/my-little-ticket.png)
 
