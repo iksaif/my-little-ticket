@@ -106,7 +106,9 @@ class JiraPlugin(base.Plugin):
         del data["self"]
 
         tags = list(issue.fields.labels)
-        tags.extend(issue.fields.components)
+        if hasattr(issue.fields, 'components'):
+            tags.extend(issue.fields.components)
+
         if issue.fields.assignee:
             assignee = issue.fields.assignee.name
         else:
