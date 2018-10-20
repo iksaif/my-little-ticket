@@ -1,5 +1,7 @@
 """Root URLs."""
 
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
@@ -27,3 +29,6 @@ urlpatterns = [
     path(r"", include("django_prometheus.urls")),
     path(r"", include("my_little_ticket.tickets.urls")),
 ]
+
+if settings.STATIC_ROOT:
+   urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
