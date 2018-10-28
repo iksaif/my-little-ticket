@@ -21,6 +21,8 @@
 db.sqlite*
 
 *~
+\#*
+.\#*
 
 ###
 ### What follows is from https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
@@ -116,3 +118,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Git itself
+.git

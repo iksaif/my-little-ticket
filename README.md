@@ -22,6 +22,7 @@ pip install -r requirements.txt
 ./manage.py migrate --run-syncdb
 ./manage.py createsuperuser
 ./manage.py runserver
+# Go to http://127.0.0.1:8000/admin and create a "board"
 ```
 
 ## Configuration
@@ -35,13 +36,13 @@ See [local_settings](examples/local_settings.py).
 docker build . -t my_little_ticket
 docker run --rm -it -p 8000:8000  \
     --name=my_little_ticket \
-	--volume=examples/local_settings.py:/opt/mlt/my_little_ticket/local_settings.py \
+    --volume=examples/local_settings.py:/opt/mlt/my_little_ticket/local_settings.py \
     my_little_ticket
 ```
 
 ## Authentication
 
-This project is using [django-allauth](https://django-allauth.readthedocs.io/en/latest/).
+This project uses [django-allauth](https://django-allauth.readthedocs.io/en/latest/).
 
 ## API
 

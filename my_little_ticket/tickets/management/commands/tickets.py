@@ -89,7 +89,9 @@ class Command(base.BaseCommand):
             ticket_obj.save()
         except Exception:
             msg = "Failed to save ticket with id #%s (%s)" % (
-                ticket_id, ticket_obj.id if ticket_obj else None)
+                ticket_id,
+                ticket_obj.id if ticket_obj else None,
+            )
             logging.exception(msg)
             self.stderr.write(self.style.ERROR(msg))
         else:

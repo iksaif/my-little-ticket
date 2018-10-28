@@ -79,13 +79,16 @@ def board(request, board_id):
     for group, tickets in list(groups.items()):
         tickets = sorted(tickets, key=lambda t: t.strategy_score, reverse=True)
         for ticket in tickets:
-            worst_strategy_status = worst_status(ticket.strategy_status, worst_strategy_status)
+            worst_strategy_status = worst_status(
+                ticket.strategy_status, worst_strategy_status
+            )
             count += 1
         groups[group] = tickets
 
     groups = sorted(list(groups.items()), key=lambda k: k[0])
     return {
-        "board": board, "groups": groups,
+        "board": board,
+        "groups": groups,
         "tickets_status": worst_strategy_status,
-        "tickets_count": count
+        "tickets_count": count,
     }

@@ -93,7 +93,10 @@ class Board(models.Model):
 
     def strategy(self):
         """Return the strategy for this board."""
-        py_module = self.strategy_py_module or "my_little_ticket.plugins.default.DefaultStrategy"
+        py_module = (
+            self.strategy_py_module
+            or "my_little_ticket.plugins.default.DefaultStrategy"
+        )
         strategy_class = module_loading.import_string(py_module)
         return strategy_class(self.strategy_params or {})
 

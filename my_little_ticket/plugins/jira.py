@@ -106,7 +106,7 @@ class JiraPlugin(base.Plugin):
         del data["self"]
 
         tags = list(issue.fields.labels)
-        if hasattr(issue.fields, 'components'):
+        if hasattr(issue.fields, "components"):
             tags.extend(issue.fields.components)
 
         if issue.fields.assignee:
@@ -114,7 +114,7 @@ class JiraPlugin(base.Plugin):
         else:
             assignee = None
 
-        if hasattr(issue.fields, 'priority') and issue.fields.priority:
+        if hasattr(issue.fields, "priority") and issue.fields.priority:
             priority = issue.fields.priority
         else:
             priority = None
@@ -139,7 +139,7 @@ class JiraPlugin(base.Plugin):
     def info(self, ticket):
         """Return info that might be interesting for this ticket."""
         data = {}
-        if 'fields' in ticket.raw:
-            if 'reporter' in ticket.raw['fields']:
-                data['reporter'] = ticket.raw['fields']['reporter'].get('name')
+        if "fields" in ticket.raw:
+            if "reporter" in ticket.raw["fields"]:
+                data["reporter"] = ticket.raw["fields"]["reporter"].get("name")
         return data
