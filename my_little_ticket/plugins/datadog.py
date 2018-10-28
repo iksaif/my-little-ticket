@@ -15,6 +15,7 @@ DEFAULT_DATADOG_API_KEY = getattr(settings, "DATADOG_API_KEY", None)
 
 # TODO: There could also be one for events (as monitors create events).
 
+
 class MonitorPlugin(base.Plugin):
     """my-little-ticket Datadog plugin.
 
@@ -100,22 +101,22 @@ class MonitorPlugin(base.Plugin):
         """Return a status or None."""
         logging.debug("Handling %s" % (monitor))
 
-        tags = list(monitor['tags'])
+        tags = list(monitor["tags"])
         assignee = None
         priority = None
-        summary = monitor['name']
-        text = monitor['message']
-        status = monitor['overall_state']
-        created_on = monitor['created']
-        updated_on = monitor['modified']
+        summary = monitor["name"]
+        text = monitor["message"]
+        status = monitor["overall_state"]
+        created_on = monitor["created"]
+        updated_on = monitor["modified"]
 
         ticket = base.Ticket(
-            ext_id=monitor['id'],
+            ext_id=monitor["id"],
             summary=summary,
             text=text,
-            link="https://%s/monitors/%d" % (self.api_host, monitor['id']),
-            project=str(monitor['org_id']),
-            type=monitor['type'],
+            link="https://%s/monitors/%d" % (self.api_host, monitor["id"]),
+            project=str(monitor["org_id"]),
+            type=monitor["type"],
             assignee=assignee,
             status=status,
             priority=priority,

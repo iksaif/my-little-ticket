@@ -37,7 +37,7 @@ class TrelloPlugin(base.Plugin):
 
         self.api_key = params.get("api_key", DEFAULT_TRELLO_API_KEY)
         self.api_secret = params.get("api_secret", DEFAULT_TRELLO_API_SECRET)
-        self.board_id = "FekN8YF9" # FIXME: make this configurable.
+        self.board_id = "FekN8YF9"  # FIXME: make this configurable.
         # FIXME: option for closed cards.
         # FIXME: option for lists.
         self.members = {}
@@ -74,8 +74,7 @@ class TrelloPlugin(base.Plugin):
             # This isn't super nice if somebody else in the same
             # process is uinsg it...
             self._client = trello.TrelloClient(
-                api_key=self.api_key,
-                api_secret=self.api_secret
+                api_key=self.api_key, api_secret=self.api_secret
             )
 
         return self._client
@@ -128,7 +127,7 @@ class TrelloPlugin(base.Plugin):
         created_on = card.created_date
         updated_on = card.date_last_activity
 
-        raw =  self.client.fetch_json('/cards/' + card.id)
+        raw = self.client.fetch_json("/cards/" + card.id)
 
         ticket = base.Ticket(
             ext_id=card.short_id,
