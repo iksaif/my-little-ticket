@@ -19,10 +19,10 @@ class TrelloPlugin(base.Plugin):
     params:
     ```python
     {
-      'api_key': '',        // API Key
-      'api_secret': '',     // API Secret
-      'params': {},         // Get tickets matching these params (see Trello API).
-      // board_id
+      'api_key': '--secret--',        // API Key
+      'api_secret': '--secret--',     // API Secret
+      'board_id': 'as124DD',          // Board ID
+      'include_closed': False,        // Include closed cards
     }
     ```
     """
@@ -37,9 +37,8 @@ class TrelloPlugin(base.Plugin):
 
         self.api_key = params.get("api_key", DEFAULT_TRELLO_API_KEY)
         self.api_secret = params.get("api_secret", DEFAULT_TRELLO_API_SECRET)
-        self.board_id = "FekN8YF9"  # FIXME: make this configurable.
-        # FIXME: option for closed cards.
-        # FIXME: option for lists.
+        self.board_id = params.get('board_id', None)
+        self.include_closed = params.get('include_closed', False)
         self.members = {}
         if "params" in params:
             self.params = params["params"]
@@ -64,8 +63,7 @@ class TrelloPlugin(base.Plugin):
     @property
     def link(self):
         """Return the link."""
-        # TODO: Fill ?q= from self.params
-        return "%s/monitors/manage" % self.api_host
+        return "https://trello.com/b/%s" % self.board_id
 
     @property
     def client(self):
@@ -87,13 +85,25 @@ class TrelloPlugin(base.Plugin):
 
     def tickets(self):
         """Return the tickets."""
-        ret = {}
-
         if not self.client:
             return ret
 
-        board = self.client.get_board(self.board_id)
-        cards = board.all_cards()
+        if self.board_id:
+            boards = [self.client.get_board(self.board_id)]
+        else:
+            boards = self.client.list_boards()
+
+        tickets = {}
+        for board in boards:
+            tickets.update(self._tickets_for_board(board))
+        return tickets
+
+    def _tickets_for_board(self, board):
+        ret = {}
+        if self.include_closed:
+            cards = board.all_cards()
+        else:
+            cards = board.open_cards()
         for card in cards:
             ticket = self._to_ticket(board, card)
             if ticket is not None:
