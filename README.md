@@ -22,7 +22,7 @@ pip install -r requirements.txt
 ./manage.py migrate --run-syncdb
 ./manage.py createsuperuser
 ./manage.py runserver
-# Go to http://127.0.0.1:8000/admin and create a "board"
+# Go to http://127.0.0.1:8000/admin and create a "board" and a "source"
 ```
 
 ## Configuration
@@ -67,7 +67,7 @@ MLT_STRATEGIES = [
 ### Plugins
 
 A plugin is a way to fetch ticket from a source. Currently this project
-can only fetch tickets from JIRA, but you can easilly create your own plugin,
+can only tickets from JIRA and Trello, but you can easilly create your own plugin,
 take a look at [base.py](my_little_ticket/plugins/base.py) and
 [jira](my_little_ticket/plugins/jira.py) to know more.
 
