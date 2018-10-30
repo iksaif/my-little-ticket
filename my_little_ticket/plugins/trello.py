@@ -15,7 +15,6 @@ DEFAULT_TRELLO_API_SECRET = getattr(settings, "TRELLO_API_SECRET", None)
 class TrelloPlugin(base.Plugin):
     """my-little-ticket Trello plugin.
 
-
     params:
     ```python
     {
@@ -37,8 +36,8 @@ class TrelloPlugin(base.Plugin):
 
         self.api_key = params.get("api_key", DEFAULT_TRELLO_API_KEY)
         self.api_secret = params.get("api_secret", DEFAULT_TRELLO_API_SECRET)
-        self.board_id = params.get('board_id', None)
-        self.include_closed = params.get('include_closed', False)
+        self.board_id = params.get("board_id", None)
+        self.include_closed = params.get("include_closed", False)
         self.members = {}
         if "params" in params:
             self.params = params["params"]
@@ -86,7 +85,7 @@ class TrelloPlugin(base.Plugin):
     def tickets(self):
         """Return the tickets."""
         if not self.client:
-            return ret
+            return {}
 
         if self.board_id:
             boards = [self.client.get_board(self.board_id)]

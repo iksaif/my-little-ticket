@@ -1,6 +1,5 @@
 """my-little-ticket Datadog plugin."""
 import logging
-import time
 
 import datadog
 

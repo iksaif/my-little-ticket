@@ -9,15 +9,15 @@ from my_little_ticket.plugins import trello
 
 @httmock.urlmatch(netloc=r"(.*\.)?trello\.com")
 def _trello_mock(url, request):
-    if url.path == '/1/members/me/boards/':
+    if url.path == "/1/members/me/boards/":
         filename = "spec_trello_boards.json"
-    elif url.path == '/1/boards/120xsa321sdpasd/dateLastActivity':
+    elif url.path == "/1/boards/120xsa321sdpasd/dateLastActivity":
         filename = "spec_trello_lastactivity.json"
-    elif url.path == '/1/boards/120xsa321sdpasd':
+    elif url.path == "/1/boards/120xsa321sdpasd":
         filename = "spec_trello_board.json"
-    elif url.path == '/1/boards/120xsa321sdpasd/cards/':
+    elif url.path == "/1/boards/120xsa321sdpasd/cards/":
         filename = "spec_trello_cards.json"
-    elif url.path == '/1/cards/5bd8baa50cb8fb4737d32733':
+    elif url.path == "/1/cards/5bd8baa50cb8fb4737d32733":
         filename = "spec_trello_card.json"
     else:
         raise Exception(url)
@@ -42,10 +42,7 @@ class TrelloPluginTests(test.TestCase):
         """Test with some settings."""
         with httmock.HTTMock(_trello_mock):
             p = trello.TrelloPlugin(
-                {
-                    "board_id": "120xsa321sdpasd",
-                    "include_closed": True,
-                }
+                {"board_id": "120xsa321sdpasd", "include_closed": True}
             )
             tickets = sorted(p.tickets().values())
             ticket = tickets[0]
