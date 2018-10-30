@@ -11,5 +11,9 @@ django-gravatar2
 django-health-check
 jsonfield
 
-jira
 humanize
+
+# Data source
+jira
+py-trello
+datadog

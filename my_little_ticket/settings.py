@@ -154,17 +154,35 @@ BOOTSTRAP4 = {
     "include_jquery": False,
 }
 
-FONTAWESOME_CSS_URL = 'https://use.fontawesome.com/releases/v5.0.13/css/all.css'
+FONTAWESOME_CSS_URL = "https://use.fontawesome.com/releases/v5.0.13/css/all.css"
 
 # JIRA Configuration
 # JIRA_URL = 'https://jira/'
 # JIRA_USERNAME = foo
 # JIRA_PASSWORD = password
 
-# Known plugins, edit to add yours.
-MLT_PLUGINS = ["my_little_ticket.plugins.jira.JiraPlugin"]
+# Datadog Configuration
+# DATADOG_APP_KEY = "...app key..."
+# DATADOG_API_KEY = "...api key..."
 
-MLT_STRATEGIES = ["my_little_ticket.plugins.default.DefaultStrategy"]
+# Trello Configuration
+# TRELLO_API_KEY = "...api key..."
+# TRELLO_API_SECRET = "...api secret..."
+
+
+# Known plugins, edit to add yours.
+# TODO: Auto-fill this list.
+MLT_PLUGINS = [
+    "my_little_ticket.plugins.jira.JiraPlugin",
+    "my_little_ticket.plugins.trello.TrelloPlugin",
+    "my_little_ticket.plugins.datadog.MonitorPlugin",
+]
+
+MLT_STRATEGIES = [
+    "my_little_ticket.plugins.default.DefaultStrategy",
+    "my_little_ticket.plugins.interrupt.InterruptStrategy",
+    "my_little_ticket.plugins.feature_request.FeatureRequestStrategy",
+]
 
 try:
     from my_little_ticket.local_settings import *  # noqa

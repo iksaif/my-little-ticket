@@ -13,3 +13,8 @@ a.anchor-link .anchor-ico, a.anchor-link .anchor-ico i {
 a.anchor-link:hover .anchor-ico {
     visibility: visible;
 }
+
+.table-fit {
+    width: 1%;
+    white-space: nowrap;
+}

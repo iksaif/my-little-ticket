@@ -1,13 +1,14 @@
 """Test for the default strategy plugin."""
 
 import unittest
-
 import uuid
+from django import test
+
 from my_little_ticket.tickets.models import Ticket
-from my_little_ticket.plugins import default
+from my_little_ticket_criteo.plugins import interrupt
 
 
-class MyTestCase(unittest.TestCase):
+class InterruptStrategyTestCase(test.TestCase):
     """Tests for DefaultStrategy."""
 
     def test_basic(self):
@@ -28,7 +29,7 @@ class MyTestCase(unittest.TestCase):
                 link="http://bug/bar",
             ),
         )
-        strategy = default.DefaultStrategy(params={})
+        strategy = interrupt.InterruptStrategy(params={})
         result = strategy.scores(tickets)
         self.assertEqual(len(result), len(tickets))
         strategy.group(tickets[0])

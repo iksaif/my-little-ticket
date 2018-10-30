@@ -22,12 +22,12 @@
     <table class="table table-hover table-sm">
         <thead>
         <tr>
-            <th>#</th>
-            <th>Priority</th>
-            <th>Assignee</th>
+            <th class="table-fit">#</th>
+            <th class="table-fit">Priority</th>
+            <th class="table-fit">Assignee</th>
             <th>Summary</th>
-            <th>Status</th>
-            <th>Score</th>
+            <th class="table-fit">Status</th>
+            <th class="table-fit">Score</th>
         </tr>
         </thead>
         <tbody>
@@ -35,14 +35,14 @@
             <tr data-toggle="tooltip" data-placement="bottom" title="Created: {{ ticket.created_on|naturaltime }} Modified: {{ ticket.modified_on|naturaltime }} {% for k,v in ticket.info.items %}{{ k|title }}: {{ v }}{% endfor %}">
                 <td><a href="{{ ticket.link }}">{{ ticket.external_id }}</a></td>
                 <td>{% if ticket.priority %}<span class="badge badge-pill badge-primary">{{ ticket.priority }}</span>{% endif %}</td>
-                <td>{% if ticket.assignee %}{{ ticket.assignee|urlize }}{%  endif %}</td>
+                <td class="table-fit">{% if ticket.assignee %}{{ ticket.assignee|urlize }}{%  endif %}</td>
                 <td>
                     <a href="{{ ticket.link }}">{{ ticket.summary }}</a><br/>
                     {% for tag in ticket.tags.all %}
                         <span class="badge badge-pill badge-info">{{ tag }}</span>
                     {% endfor %}
                 </td>
-                <td><span class="badge badge-pill badge-secondary">{{ ticket.status }}</span></td>
+                <td class="table-fit"><span class="badge badge-pill badge-secondary">{{ ticket.status }}</span></td>
                 <td>
 
                     <span class="badge badge-pill badge-{{ ticket.strategy_status }}">

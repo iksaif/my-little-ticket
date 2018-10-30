@@ -22,6 +22,7 @@ pip install -r requirements.txt
 ./manage.py migrate --run-syncdb
 ./manage.py createsuperuser
 ./manage.py runserver
+# Go to http://127.0.0.1:8000/admin and create a "board" and a "source"
 ```
 
 ## Configuration
@@ -35,13 +36,13 @@ See [local_settings](examples/local_settings.py).
 docker build . -t my_little_ticket
 docker run --rm -it -p 8000:8000  \
     --name=my_little_ticket \
-	--volume=examples/local_settings.py:/opt/mlt/my_little_ticket/local_settings.py \
+    --volume=examples/local_settings.py:/opt/mlt/my_little_ticket/local_settings.py \
     my_little_ticket
 ```
 
 ## Authentication
 
-This project is using [django-allauth](https://django-allauth.readthedocs.io/en/latest/).
+This project uses [django-allauth](https://django-allauth.readthedocs.io/en/latest/).
 
 ## API
 
@@ -66,7 +67,7 @@ MLT_STRATEGIES = [
 ### Plugins
 
 A plugin is a way to fetch ticket from a source. Currently this project
-can only fetch tickets from JIRA, but you can easilly create your own plugin,
+can only tickets from JIRA and Trello, but you can easilly create your own plugin,
 take a look at [base.py](my_little_ticket/plugins/base.py) and
 [jira](my_little_ticket/plugins/jira.py) to know more.
 
